@@ -17,26 +17,24 @@ it("has a text area and a button", () => {
   expect(wrapped.find("button").length).toEqual(1);
 });
 
-it("has a text area that users can type in", () => {
-  wrapped.find("textarea").simulate("change", {
-    target: { value: "new comment" },
+describe("the textarea", () => {
+  beforeEach(() => {
+    wrapped.find("textarea").simulate("change", {
+      target: { value: "new comment" },
+    });
+
+    wrapped.update();
   });
 
-  wrapped.update();
-
-  expect(wrapped.find("textarea").prop("value")).toEqual("new comment");
-});
-
-it("empties the textarea field, when the form is submitted", () => {
-  wrapped.find("textarea").simulate("change", {
-    target: { value: "new comment" },
+  it("has a text area that users can type in", () => {
+    expect(wrapped.find("textarea").prop("value")).toEqual("new comment");
   });
 
-  wrapped.update();
+  it("empties the textarea field, when the form is submitted", () => {
+    wrapped.find("form").simulate("submit");
 
-  wrapped.find("form").simulate("submit");
+    wrapped.update();
 
-  wrapped.update();
-
-  expect(wrapped.find("textarea").prop("value")).toEqual("");
+    expect(wrapped.find("textarea").prop("value")).toEqual("");
+  });
 });
