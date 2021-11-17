@@ -11,3 +11,9 @@ it("handle actions of type SAVE_COMMENT", () => {
 
   expect(newState).toEqual(["New Comment"]);
 });
+
+it("handles action with unknown type", () => {
+  const newState = commentsReducer([], { type: "IDONTEXIST" });
+
+  expect(newState).toEqual([]);
+});
